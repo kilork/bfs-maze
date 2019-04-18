@@ -11,7 +11,7 @@ fn main() -> Result<(), std::num::ParseIntError> {
     }
 
     let mut min_distance = std::usize::MAX;
-    let mut pos = None;
+    let mut min_pos = vec![];
 
     let targets = data.iter().filter(|&&x| x == '.').count();
 
@@ -22,20 +22,20 @@ fn main() -> Result<(), std::num::ParseIntError> {
             {
                 if distance < min_distance {
                     min_distance = distance;
-                    pos = Some((row, col));
+                    min_pos.clear();
+                }
+                if distance == min_distance {
+                    min_pos.push((row, col));
                 }
             }
         }
     }
 
-    if let Some((y, x)) = pos {
-        println!(
-            "Min distance {} is at row {} col {}",
-            min_distance,
-            y + 1,
-            x + 1
-        );
-        data[y * cols + x] = if data[y * cols + x] == ' ' { 'o' } else { 'O' };
+    if !min_pos.is_empty() {
+        println!("Min distance {}", min_distance);
+        for (y, x) in min_pos {
+            data[y * cols + x] = if data[y * cols + x] == ' ' { 'o' } else { 'O' };
+        }
         let mut buf = data.iter();
         for _ in 0..rows {
             for _ in 0..cols {
