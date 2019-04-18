@@ -1,0 +1,9 @@
+[package]
+name = "bfs-maze"
+version = "0.1.0"
+authors = ["Alexander Korolev <kilork@yandex.ru>"]
+license = "MIT"
+edition = "2018"
+
+[dependencies]
+console = "0.7"
